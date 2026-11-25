@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import Clients from "@/components/Clients";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
+import Photo from "@/components/Photo";
+import { faq } from "@/lib/faq";
 import Gallery from "@/components/Gallery";
 import PageHeader from "@/components/PageHeader";
 import { getRealisations } from "@/lib/realisations";
@@ -13,13 +16,13 @@ export const metadata: Metadata = {
 };
 
 const zones = [
-  { title: "Surfaces de vente", text: "Grands formats 60 × 60 et 40 × 40 cm en pose collée, avec des carreaux U4P4S pour résister aux chariots et aux transpalettes.", t: 44 },
-  { title: "Galeries marchandes", text: "Des circulations très fréquentées, carrelées pour supporter des milliers de passages par jour.", t: 30 },
-  { title: "Laboratoires", text: "Boucherie, boulangerie, poissonnerie : carreaux 20 × 20 cm en pose scellée pour les zones de préparation.", t: 16 },
+  { title: "Surfaces de vente", text: "Grands formats 60 × 60 et 40 × 40 cm en pose collée, avec des carreaux U4P4S pour résister aux chariots et aux transpalettes.", file: "lidl-surface-de-vente.webp" },
+  { title: "Galeries marchandes", text: "Des circulations très fréquentées, carrelées pour supporter des milliers de passages par jour.", file: "geant-casino-bastia.webp" },
+  { title: "Laboratoires", text: "Boucherie, boulangerie, poissonnerie : carreaux 20 × 20 cm en pose scellée pour les zones de préparation.", file: "zone-laboratoire-20x20.webp" },
 ];
 
 export default function GrandeDistribution() {
-  const chantiers = getRealisations().filter((r) => r.cat !== "pose");
+  const chantiers = getRealisations().filter((r) => r.cat === "distribution" || r.cat === "laboratoires").slice(0, 8);
 
   return (
     <>
@@ -40,7 +43,7 @@ export default function GrandeDistribution() {
           <div className="cards cards--3">
             {zones.map((z) => (
               <article className="card" key={z.title}>
-                <div className="card__tile tile" style={{ "--t": `${z.t}px` } as CSSProperties} />
+                <Photo className="card__tile card__tile--tall" file={z.file} alt="" sizes="(max-width: 800px) 100vw, 380px" />
                 <h3>{z.title}</h3>
                 <p>{z.text}</p>
               </article>
@@ -52,7 +55,8 @@ export default function GrandeDistribution() {
       <section className="section section--tint">
         <div className="wrap split split--center">
           <div>
-            <p className="eyebrow">Références</p>
+            <Photo className="media media--wide" file="galerie-marchande-verriere.webp" alt="Galerie marchande carrelée sous une verrière" />
+            <p className="eyebrow" style={{ marginTop: 28 }}>Références</p>
             <h2>Des enseignes nous ont confié leurs sols</h2>
             <p className="muted">
               Quand le planning d’ouverture est serré, la pose sur chape à prise rapide réduit la durée
@@ -93,6 +97,10 @@ export default function GrandeDistribution() {
           <Gallery items={chantiers} />
         </div>
       </section>
+
+      <Clients secteur="distribution" title="Les enseignes pour lesquelles nous avons travaillé" />
+
+      <Faq items={faq.distribution} tint />
 
       <CtaBand />
     </>

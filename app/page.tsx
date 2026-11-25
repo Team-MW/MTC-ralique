@@ -1,7 +1,11 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import Clients from "@/components/Clients";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
 import Gallery from "@/components/Gallery";
+import Photo from "@/components/Photo";
+import ZoneIntervention from "@/components/ZoneIntervention";
+import { faq } from "@/lib/faq";
 import { getRealisations } from "@/lib/realisations";
 import { site } from "@/lib/site";
 
@@ -9,14 +13,14 @@ import { site } from "@/lib/site";
 const mosaic = ["", "", "is-noir", "", "", "is-rouge", "", "", "", "", "", "is-ciel", "is-or", "", "", ""];
 
 const prestations = [
-  { title: "Pose collée", text: "Grands formats 60 × 60 et 40 × 40 cm pour les surfaces de vente.", t: 44 },
-  { title: "Pose scellée", text: "Carreaux 20 × 20 cm pour les laboratoires et zones techniques.", t: 16 },
-  { title: "Chape à prise rapide", text: "Pour tenir les délais et limiter l’immobilisation des locaux.", t: 96 },
-  { title: "Carrelage U4P4S", text: "Pour les sols soumis à un trafic intense et aux charges roulantes.", t: 30 },
+  { title: "Pose collée", text: "Grands formats 60 × 60 et 40 × 40 cm pour les surfaces de vente.", file: "chantier-carreleur.webp" },
+  { title: "Pose scellée", text: "Carreaux 20 × 20 cm pour les laboratoires et zones techniques.", file: "laboratoire-pose-scellee.webp" },
+  { title: "Chape à prise rapide", text: "Pour tenir les délais et limiter l’immobilisation des locaux.", file: "pose-collee-chape-rapide.webp" },
+  { title: "Carrelage U4P4S", text: "Pour les sols soumis à un trafic intense et aux charges roulantes.", file: "pose-collee-u4p4s.webp" },
 ];
 
 export default function Accueil() {
-  const apercu = getRealisations().slice(0, 6);
+  const apercu = getRealisations().slice(0, 8);
 
   return (
     <>
@@ -29,7 +33,7 @@ export default function Accueil() {
             </h1>
             <p className="lead">
               Surfaces de vente, galeries marchandes, laboratoires, logements&nbsp;: {site.name} pose vos sols carrelés
-              sur tout le territoire.
+dans toute la France.
             </p>
             <div className="hero__cta">
               <Link className="btn" href="/contact">
@@ -48,6 +52,8 @@ export default function Accueil() {
         </div>
       </section>
 
+      <Clients defilement />
+
       <section className="section">
         <div className="wrap split">
           <div>
@@ -56,8 +62,8 @@ export default function Accueil() {
           </div>
           <div className="prose">
             <p>
-              Installée à {site.city}, près de Toulouse, {site.name} intervient partout en France pour la pose de
-              carrelage, des magasins de la grande distribution aux programmes de logements.
+              Installée à {site.city}, près de Toulouse, {site.name} pose du carrelage dans toute la France pour la
+              grande distribution, et en Midi-Pyrénées pour les logements.
             </p>
             <p>Paris, le Var, le Tarn, la Corse&nbsp;: nous nous déplaçons là où se trouve votre chantier.</p>
             <Link className="link" href="/presentation">
@@ -77,7 +83,7 @@ export default function Accueil() {
           </div>
           <div className="cards cards--2">
             <Link className="sector" href="/grande-distribution">
-              <div className="sector__tile tile" style={{ "--t": "60px" } as CSSProperties} />
+              <Photo className="sector__tile" file="galerie-marchande-allee.webp" alt="Allée carrelée d’une galerie marchande" />
               <div className="sector__body">
                 <h3>Grande distribution</h3>
                 <p>Surfaces de vente, galeries marchandes et laboratoires pour les enseignes.</p>
@@ -85,7 +91,7 @@ export default function Accueil() {
               </div>
             </Link>
             <Link className="sector" href="/logements">
-              <div className="sector__tile tile" style={{ "--t": "36px" } as CSSProperties} />
+              <Photo className="sector__tile" file="chantier-immeuble.webp" alt="Immeuble en construction, matériel MT Céramique au premier plan" />
               <div className="sector__body">
                 <h3>Logements</h3>
                 <p>Pièces de vie, cuisines, salles d’eau et parties communes.</p>
@@ -110,7 +116,7 @@ export default function Accueil() {
           <div className="cards">
             {prestations.map((p) => (
               <article className="card" key={p.title}>
-                <div className="card__tile tile" style={{ "--t": `${p.t}px` } as CSSProperties} />
+                <Photo className="card__tile" file={p.file} alt="" sizes="(max-width: 560px) 100vw, 300px" />
                 <h3>{p.title}</h3>
                 <p>{p.text}</p>
               </article>
@@ -133,6 +139,10 @@ export default function Accueil() {
           <Gallery items={apercu} />
         </div>
       </section>
+
+      <ZoneIntervention />
+
+      <Faq items={faq.accueil} tint />
 
       <CtaBand />
     </>

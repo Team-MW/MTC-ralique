@@ -45,7 +45,7 @@ export default function Gallery({ items, filters }: Props) {
             <figure className="shot tile" style={{ "--t": `${r.format}px` } as CSSProperties}>
               {r.photo && (
                 <button type="button" className="shot__zoom" onClick={() => setZoom(r)} aria-label={`Agrandir : ${r.title}`}>
-                  <Image src={r.photo} alt={`${r.title} — ${r.detail}`} fill sizes="(max-width: 700px) 100vw, (max-width: 1020px) 50vw, 380px" />
+                  <Image src={r.photo} alt={`${r.title} — ${r.detail}`} fill sizes="(max-width: 700px) 50vw, (max-width: 1080px) 33vw, 290px" />
                 </button>
               )}
               <figcaption>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
+import { faq } from "@/lib/faq";
 import Gallery from "@/components/Gallery";
 import PageHeader from "@/components/PageHeader";
 import { categories, getRealisations } from "@/lib/realisations";
@@ -24,6 +26,8 @@ export default function Realisations() {
           <Gallery items={getRealisations()} filters={categories} />
         </div>
       </section>
+
+      <Faq items={faq.realisations} tint />
 
       <CtaBand />
     </>

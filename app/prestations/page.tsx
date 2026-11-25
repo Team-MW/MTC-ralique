@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
+import Photo from "@/components/Photo";
+import { faq } from "@/lib/faq";
 import PageHeader from "@/components/PageHeader";
 
 export const metadata: Metadata = {
@@ -12,25 +14,29 @@ export const metadata: Metadata = {
 const prestations = [
   {
     title: "Pose collée",
-    t: 64,
+    file: "chantier-carreleur.webp",
+    alt: "Carreleur posant des carreaux à la colle",
     text: "Les carreaux sont collés sur un support plan et préparé. C’est la technique que nous utilisons pour les grands formats des surfaces de vente et des circulations.",
     points: ["Formats 60 × 60 cm et 40 × 40 cm", "Surfaces de vente et galeries marchandes", "Pièces de vie et parties communes en logement"],
   },
   {
     title: "Pose scellée",
-    t: 22,
+    file: "laboratoire-pose-scellee.webp",
+    alt: "Laboratoire carrelé en 20 × 20 cm, pose scellée",
     text: "Les carreaux sont posés sur un lit de mortier. Cette pose traditionnelle convient aux petits formats des zones techniques.",
     points: ["Format 20 × 20 cm", "Laboratoires et zones de préparation", "Locaux techniques"],
   },
   {
     title: "Pose sur chape à prise rapide",
-    t: 400,
+    file: "pose-collee-chape-rapide.webp",
+    alt: "Carrelage 60 × 60 posé sur chape à prise rapide",
     text: "Une chape à prise rapide permet de carreler plus tôt qu’avec une chape traditionnelle. Elle répond aux plannings serrés et limite la durée d’immobilisation des locaux.",
     points: ["Ouvertures et rénovations de magasins", "Chantiers à délais courts", "Pose collée 60 × 60 cm"],
   },
   {
     title: "Carrelage U4P4S",
-    t: 44,
+    file: "pose-collee-u4p4s.webp",
+    alt: "Allée carrelée en 60 × 60 cm U4P4S",
     text: "Dans le classement UPEC des revêtements de sol, U4 et P4S sont les niveaux les plus élevés de résistance à l’usure et au poinçonnement. Ces carreaux sont destinés aux sols les plus sollicités.",
     points: ["Trafic piétonnier intense", "Chariots, transpalettes et charges roulantes", "Surfaces de vente de la grande distribution"],
   },
@@ -55,7 +61,7 @@ export default function Prestations() {
         <div className="wrap">
           {prestations.map((p) => (
             <article className="presta" key={p.title}>
-              <div className="presta__tile tile" style={{ "--t": `${p.t}px` } as CSSProperties} aria-hidden="true" />
+              <Photo className="presta__tile" file={p.file} alt={p.alt} sizes="(max-width: 800px) 100vw, 360px" />
               <div>
                 <h2>{p.title}</h2>
                 <p className="muted">{p.text}</p>
@@ -100,6 +106,8 @@ export default function Prestations() {
           </div>
         </div>
       </section>
+
+      <Faq items={faq.prestations} />
 
       <CtaBand />
     </>

@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
+import Photo from "@/components/Photo";
+import ZoneIntervention from "@/components/ZoneIntervention";
+import { faq } from "@/lib/faq";
 import PageHeader from "@/components/PageHeader";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Présentation",
   description:
-    "MT Céramique, entreprise de carrelage installée à Plaisance-du-Touch (31), intervient partout en France pour la grande distribution et les logements.",
+    "MT Céramique, entreprise de carrelage installée à Plaisance-du-Touch (31), intervient dans toute la France pour la grande distribution et en Midi-Pyrénées pour les logements.",
 };
 
 const etapes = [
@@ -17,29 +20,21 @@ const etapes = [
   { title: "Finitions", text: "Jointoiement, nettoyage de fin de chantier et réception du sol avec vous." },
 ];
 
-const zones = [
-  { lieu: "Paris", chantier: "H&M Forum des Halles" },
-  { lieu: "Var (83)", chantier: "Intermarché Salernes" },
-  { lieu: "Tarn (81)", chantier: "Lidl Carmaux" },
-  { lieu: "Haute-Corse", chantier: "Géant Casino Bastia" },
-];
-
 export default function Presentation() {
   return (
     <>
       <PageHeader
         eyebrow="Présentation"
         title="Des carreleurs de chantier, pour des sols qui durent"
-        lead={`${site.name} pose du carrelage pour la grande distribution et les logements, depuis ${site.city} et partout en France.`}
+        lead={`Depuis ${site.city}, ${site.name} pose du carrelage dans toute la France pour la grande distribution, et en Midi-Pyrénées pour les logements.`}
       />
 
       <section className="section">
-        <div className="wrap split">
-          <div>
+        <div className="wrap split split--center">
+          <Photo className="media" file="chantier-equipe.webp" alt="Carreleurs MT Céramique en train de poser un sol" />
+          <div className="prose">
             <p className="eyebrow">L’entreprise</p>
             <h2>Basés près de Toulouse, présents sur vos chantiers</h2>
-          </div>
-          <div className="prose">
             <p>
               {site.name} est une entreprise de carrelage installée au {site.street}, à {site.city}, en
               Haute-Garonne.
@@ -74,29 +69,13 @@ export default function Presentation() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="wrap split">
-          <div>
-            <p className="eyebrow">Zone d’intervention</p>
-            <h2>Partout en France</h2>
-            <p className="muted">
-              Nous nous déplaçons là où se trouve votre chantier, sur le continent comme en Corse. Quelques exemples
-              de chantiers réalisés&nbsp;:
-            </p>
-            <Link className="link" href="/realisations">
-              Voir nos réalisations
-            </Link>
-          </div>
-          <ul className="refs" style={{ marginTop: 0 }}>
-            {zones.map((z) => (
-              <li key={z.lieu}>
-                <strong>{z.lieu}</strong>
-                {z.chantier}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <section className="band">
+        <Photo file="damier.png" alt="Sol carrelé en damier clair et anthracite" sizes="100vw" />
       </section>
+
+      <ZoneIntervention />
+
+      <Faq items={faq.presentation} tint />
 
       <CtaBand />
     </>

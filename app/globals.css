@@ -31,7 +31,7 @@ body {
 
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
-ul { list-style: none; margin: 0; padding: 0; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
 p { margin: 0; }
 address { font-style: normal; }
 
@@ -46,7 +46,7 @@ address { font-style: normal; }
 .stripe { height: 5px; background: linear-gradient(90deg, var(--or), var(--ciel) 50%, var(--or)); }
 
 /* ---------- Typographie ---------- */
-h1, h2, h3 { font-stretch: 115%; line-height: 1.05; margin: 0; text-wrap: balance; }
+h1, h2, h3 { font-stretch: 115%; line-height: 1.05; margin: 0; text-wrap: balance; overflow-wrap: break-word; }
 h1 { font-size: clamp(2.2rem, 5.6vw, 4.2rem); font-weight: 900; text-transform: uppercase; letter-spacing: -.01em; }
 h1 em { font-style: normal; display: block; color: var(--rouge); }
 h2 { font-size: clamp(1.65rem, 3.4vw, 2.6rem); font-weight: 800; }
@@ -56,6 +56,7 @@ h3 { font-size: 1.2rem; font-weight: 800; }
 .lead { max-width: 60ch; margin-top: 24px; font-size: 1.15rem; color: var(--gris); }
 .prose { color: var(--gris); }
 .prose > * + * { margin-top: 14px; }
+.prose h2 { color: var(--encre); }
 .prose h3 { color: var(--encre); margin-top: 32px; }
 .prose a { color: var(--encre); font-weight: 600; }
 h2 + .prose, h2 + p { margin-top: 18px; }
@@ -145,6 +146,7 @@ h2 + .prose, h2 + p { margin-top: 18px; }
 .split--center { align-items: center; }
 
 .media { position: relative; aspect-ratio: 4 / 3; border-radius: var(--rayon); }
+.media--wide { aspect-ratio: 16 / 9; }
 .media__tag { position: absolute; left: 0; bottom: 0; background: var(--encre); color: var(--blanc); font-weight: 800; font-stretch: 115%; padding: 10px 16px; border-radius: 0 var(--rayon) 0 var(--rayon); }
 
 /* ---------- Cartes ---------- */
@@ -152,13 +154,14 @@ h2 + .prose, h2 + p { margin-top: 18px; }
 .cards--3 { grid-template-columns: repeat(3, 1fr); }
 .cards--2 { grid-template-columns: repeat(2, 1fr); }
 .card { background: var(--blanc); border: 1px solid var(--trait); border-radius: var(--rayon); padding: 24px; }
-.card__tile { height: 96px; border-radius: 2px; margin-bottom: 20px; }
+.card__tile { height: 150px; border-radius: 2px; margin-bottom: 20px; }
+.card__tile--tall { height: 210px; }
 .card p { color: var(--gris); font-size: 15.5px; margin-top: 10px; }
 
 /* Grandes cartes « secteur » de l'accueil */
 .sector { display: flex; flex-direction: column; text-decoration: none; background: var(--blanc); border: 1px solid var(--trait); border-radius: var(--rayon); overflow: hidden; transition: border-color .15s; }
 .sector:hover { border-color: var(--encre); }
-.sector__tile { height: 180px; }
+.sector__tile { height: 240px; }
 .sector__body { padding: 28px; }
 .sector__body p { color: var(--gris); margin-top: 12px; }
 .sector__more { display: inline-block; margin-top: 18px; font-weight: 700; border-bottom: 2px solid var(--rouge); }
@@ -200,8 +203,8 @@ h2 + .prose, h2 + p { margin-top: 18px; }
 .filters button:hover { border-color: var(--encre); }
 .filters button[aria-pressed="true"] { background: var(--encre); border-color: var(--encre); color: var(--blanc); }
 
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.shot { position: relative; margin: 0; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--rayon); display: flex; align-items: flex-end; }
+.gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.shot { position: relative; margin: 0; aspect-ratio: 1; overflow: hidden; border-radius: var(--rayon); display: flex; align-items: flex-end; }
 .shot__zoom { position: absolute; inset: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
 .shot__zoom img { object-fit: cover; transition: transform .4s; }
 .shot:hover .shot__zoom img { transform: scale(1.04); }
@@ -252,45 +255,218 @@ h2 + .prose, h2 + p { margin-top: 18px; }
 .footer a { text-decoration: none; }
 .footer a:hover { color: var(--rouge); }
 .footer__phone { display: inline-block; margin-top: 12px; font-weight: 800; font-stretch: 115%; font-size: 1.3rem; color: var(--encre); }
+.footer__credit a { font-weight: 700; color: var(--encre); }
 .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 18px 0 24px; border-top: 1px solid var(--trait); font-size: 14px; }
 
+/* ---------- Photos ---------- */
+.photo { position: relative; overflow: hidden; background: var(--carreau); }
+.photo img { object-fit: cover; }
+.band { height: clamp(170px, 28vw, 380px); }
+.band .photo { height: 100%; }
+.contact__side { display: grid; gap: 18px; }
+
+/* ---------- FAQ ---------- */
+.faq { display: grid; grid-template-columns: 1fr 1.7fr; gap: clamp(28px, 6vw, 80px); align-items: start; }
+.faq__list { border-top: 2px solid var(--encre); }
+.faq__item { border-bottom: 1px solid var(--trait); }
+.faq__item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: 20px 0; cursor: pointer; list-style: none;
+  font-weight: 700; font-size: 1.05rem; line-height: 1.35;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: "+"; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--encre); color: var(--blanc);
+  font-size: 20px; font-weight: 400; line-height: 1; transition: transform .2s, background .2s;
+}
+.faq__item[open] summary::after { transform: rotate(45deg); background: var(--rouge); }
+.faq__item summary:hover { color: var(--rouge); }
+.faq__item p { color: var(--gris); padding: 0 52px 22px 0; max-width: 68ch; }
+
+/* ---------- Pages légales ---------- */
+.legal__list { display: grid; grid-template-columns: max-content 1fr; gap: 8px 28px; margin: 14px 0 0; }
+.legal__list dt { font-weight: 700; color: var(--encre); }
+.legal__list dd { margin: 0; overflow-wrap: anywhere; }
+.legal__bullets { list-style: disc; padding-left: 22px; }
+.legal__bullets li + li { margin-top: 6px; }
+.legal [id] { scroll-margin-top: 110px; }
+
+/* Bouton d'apparence « lien » */
+.textlink { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+.textlink:hover { color: var(--rouge); }
+.prose .textlink { color: var(--encre); font-weight: 600; }
+
+.contact__mail { font-weight: 700; font-size: 1.1rem; overflow-wrap: anywhere; }
+.contact__mail:hover { color: var(--rouge); }
+.footer__mail { display: block; margin-top: 6px; overflow-wrap: anywhere; }
+.footer__legal { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+.footer .textlink { text-decoration: none; }
+
+/* ---------- Bandeau cookies ---------- */
+.cookies {
+  position: fixed; z-index: 90; left: 20px; bottom: 20px; width: min(460px, calc(100% - 40px));
+  max-height: calc(100dvh - 40px); overflow-y: auto;
+  background: var(--blanc); border: 1px solid var(--trait); border-top: 4px solid var(--rouge);
+  border-radius: var(--rayon); padding: 22px; box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
+  font-size: 15px;
+}
+.cookies h2 { font-size: 1.15rem; margin-bottom: 8px; }
+.cookies p { color: var(--gris); }
+.cookies p a { color: var(--encre); font-weight: 600; }
+.cookies__options { margin-top: 16px; border-top: 1px solid var(--trait); }
+.cookies__options label { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--trait); cursor: pointer; color: var(--gris); font-size: 14px; }
+.cookies__options strong { display: block; color: var(--encre); font-size: 15px; }
+.cookies__options input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--rouge); flex: none; }
+.cookies__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 18px; }
+.cookies__link { font: inherit; font-weight: 600; background: none; border: 0; padding: 8px 0; cursor: pointer; text-decoration: underline; color: var(--encre); }
+.cookies__link:hover { color: var(--rouge); }
+
+/* ---------- Bande de logos clients ---------- */
+.clients { padding: 36px 0 40px; border-bottom: 1px solid var(--trait); }
+.clients__title { text-align: center; color: var(--gris); margin-bottom: 22px; }
+.clients img { height: 64px; width: auto; max-width: 150px; object-fit: contain; }
+.clients__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px 56px; }
+
+.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track { display: flex; width: max-content; animation: defile 70s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__group { display: flex; align-items: center; gap: 64px; padding-right: 64px; flex: none; }
+@keyframes defile { to { transform: translateX(-25%); } }
+
+/* ---------- Zone d'intervention ---------- */
+.zone__head { max-width: 760px; margin-bottom: 40px; }
+.zone__head .muted { margin-top: 16px; }
+.zone { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+.zone__lists { display: grid; gap: 40px; }
+.zone__lists h3 { margin-bottom: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chips li { border: 1px solid var(--trait); background: var(--blanc); border-radius: 100px; padding: 6px 14px; font-size: 14.5px; font-weight: 600; }
+.zone__deps { margin: 16px 0 0; border-top: 1px solid var(--trait); }
+.zone__deps > div { display: grid; grid-template-columns: 190px 1fr; gap: 4px 16px; padding: 10px 0; border-bottom: 1px solid var(--trait); }
+.zone__deps dt { font-weight: 700; }
+.zone__deps dd { margin: 0; color: var(--gris); }
+
+.carte { width: 100%; height: auto; display: block; }
+.carte__joint { fill: var(--blanc); }
+.carte__carreau { fill: #e2e0db; }
+.carte__terre { stroke: #cfccc5; stroke-width: 1.5; stroke-linejoin: round; }
+.carte__ville circle { fill: var(--encre); stroke: var(--blanc); stroke-width: 2.5; }
+.carte__ville text { font-size: 17px; font-weight: 700; fill: var(--encre); paint-order: stroke; stroke: var(--blanc); stroke-width: 4px; stroke-linejoin: round; }
+.carte__ville--siege circle { fill: var(--rouge); }
+.carte__ville--siege text { fill: var(--rouge); font-size: 19px; }
+
 /* ---------- Adaptation aux écrans ---------- */
+
+/* Tablette paysage et petits portables : menu replié */
 @media (max-width: 1080px) {
   .cards, .steps { grid-template-columns: repeat(2, 1fr); }
   .cards--3 { grid-template-columns: repeat(3, 1fr); }
-  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .gallery { grid-template-columns: repeat(3, 1fr); }
 
   .burger { display: block; }
   .header__in { position: relative; }
   .nav {
     display: none; position: absolute; left: -20px; right: -20px; top: 100%;
     flex-direction: column; align-items: stretch; gap: 0;
+    max-height: calc(100dvh - 120px); overflow-y: auto; overscroll-behavior: contain;
     background: var(--blanc); border-bottom: 1px solid var(--trait);
     padding: 8px 20px 20px; box-shadow: 0 18px 30px rgba(0, 0, 0, .08);
   }
   .nav.is-open { display: flex; }
-  .nav__link { padding: 13px 0; border-bottom: 1px solid var(--trait); font-size: 17px; }
+  .nav__link { padding: 14px 0; border-bottom: 1px solid var(--trait); font-size: 17px; }
   .nav__link[aria-current="page"] { color: var(--rouge); border-color: var(--trait); }
   .nav .btn { margin-top: 16px; text-align: center; padding: 14px; }
 }
 
+/* Tablette portrait : une seule colonne de lecture */
 @media (max-width: 800px) {
   body { font-size: 16px; }
-  .split, .hero__in, .presta { grid-template-columns: 1fr; }
-  .cards--3, .cards--2 { grid-template-columns: 1fr; }
-  .mosaic { max-width: 340px; }
-  .presta__tile { max-width: 420px; width: 100%; }
-  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .split, .presta, .faq, .zone { grid-template-columns: 1fr; }
+  .carte { max-width: 520px; margin-inline: auto; }
+  .media { aspect-ratio: 16 / 9; }
+  .cards--3 { grid-template-columns: 1fr; }
+  .pagehead h1 { font-size: clamp(1.7rem, 6.4vw, 2.6rem); max-width: none; }
+  .lead { font-size: 1.05rem; margin-top: 18px; }
+  .presta__tile { max-width: 460px; width: 100%; }
+  .card__tile--tall { height: 240px; }
+  .section__head { margin-bottom: 28px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; padding: 44px 0 32px; }
   .footer__grid > :first-child { grid-column: 1 / -1; }
   .brand img { width: 150px; }
+  .faq__item p { padding-right: 0; }
 }
 
-@media (max-width: 560px) {
-  .cards, .steps, .gallery { grid-template-columns: 1fr; }
+/* Téléphone */
+@media (max-width: 620px) {
+  .wrap { width: min(100% - 32px, var(--max)); }
+  .nav { left: -16px; right: -16px; padding-inline: 16px; }
+  .topbar { font-size: 13px; }
+
+  .cards, .cards--2, .steps { grid-template-columns: 1fr; }
+  .card { padding: 18px; }
+  .card__tile, .card__tile--tall { height: 190px; }
+  .sector__tile { height: 200px; }
+  .sector__body { padding: 20px; }
+  .hero__in { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(1.75rem, 7.5vw, 3rem); }
+  .mosaic { max-width: 260px; gap: 5px; }
+
   .hero__cta .btn, .cta__actions .btn { flex: 1 1 100%; text-align: center; }
+  .cta__in, .cta__actions { flex-direction: column; align-items: stretch; }
+  .cta__phone { text-align: left; }
+
+  /* Galerie : deux colonnes, légendes compactes */
+  .gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .shot figcaption { padding: 8px 10px; font-size: 12px; }
+  .shot figcaption strong { font-size: 13.5px; }
+
+  /* Filtres : une ligne qui défile au doigt */
+  .filters { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 0 16px 6px; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button { flex: none; padding: 10px 18px; }
+
+  /* Tableau des formats : une fiche par ligne */
+  .table { min-width: 0; }
+  .table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .table tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--trait); }
+  .table th, .table td { display: block; padding: 2px 0; border: 0; }
+  .table tbody th { font-size: 1.1rem; margin-bottom: 4px; }
+
+  .faq__item summary { padding: 16px 0; font-size: 1rem; }
+  .map { aspect-ratio: 1; }
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; }
+  .clients img { height: 48px; max-width: 110px; }
+  .marquee__group { gap: 40px; padding-right: 40px; }
+  .clients__row { gap: 18px 32px; }
+  .zone__deps > div { grid-template-columns: 1fr; }
+  .carte__ville text { font-size: 21px; }
+  .legal__list { grid-template-columns: 1fr; gap: 0; }
+  .legal__list dd { margin-bottom: 10px; }
+  .cookies { left: 0; right: 0; bottom: 0; width: 100%; border-radius: 0; border-inline: 0; border-bottom: 0; padding: 18px 16px; max-height: 80dvh; }
+  .cookies__actions .btn { flex: 1 1 calc(50% - 7px); text-align: center; padding-inline: 10px; }
+  .cookies__link { flex: 1 1 100%; text-align: center; }
+}
+
+/* Très petits écrans */
+@media (max-width: 360px) {
+  .topbar span { display: none; }
+  .topbar__in { justify-content: flex-end; }
+  .brand img { width: 130px; }
+}
+
+/* Téléphone en paysage : en-tête non collant pour garder de la hauteur */
+@media (max-height: 480px) and (orientation: landscape) {
+  .header { position: static; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  /* Sans animation : les logos s'affichent en rangée fixe, sans répétition. */
+  .marquee { -webkit-mask-image: none; mask-image: none; }
+  .marquee__track { animation: none; width: auto; justify-content: center; }
+  .marquee__group { flex-wrap: wrap; justify-content: center; gap: 24px 48px; padding: 0 20px; }
+  .marquee__group[aria-hidden] { display: none; }
   * { transition: none !important; }
 }

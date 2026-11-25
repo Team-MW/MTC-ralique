@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import Clients from "@/components/Clients";
 import CtaBand from "@/components/CtaBand";
+import Faq from "@/components/Faq";
+import Photo from "@/components/Photo";
+import { faq } from "@/lib/faq";
 import PageHeader from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Logements",
   description:
-    "Pose de carrelage en logements : pièces de vie, cuisines, salles d'eau et parties communes. MT Céramique intervient sur vos programmes partout en France.",
+    "Pose de carrelage en logements : pièces de vie, cuisines, salles d'eau et parties communes. MT Céramique intervient sur vos programmes en Midi-Pyrénées.",
 };
 
 const pieces = [
@@ -22,7 +26,7 @@ export default function Logements() {
       <PageHeader
         eyebrow="Logements"
         title="Le carrelage de vos programmes de logements"
-        lead="Nous réalisons la pose de carrelage en logements, des pièces de vie aux parties communes."
+        lead="Nous réalisons la pose de carrelage en logements dans toute la région Midi-Pyrénées, des pièces de vie aux parties communes."
       />
 
       <section className="section">
@@ -47,9 +51,7 @@ export default function Logements() {
 
       <section className="section section--tint">
         <div className="wrap split split--center">
-          <div className="media tile" style={{ "--t": "48px" } as CSSProperties} aria-hidden="true">
-            <span className="media__tag">40 × 40</span>
-          </div>
+          <Photo className="media" file="chantier-immeuble.webp" alt="Immeuble en construction, matériel MT Céramique au premier plan" />
           <div>
             <p className="eyebrow">Notre engagement</p>
             <h2>Un seul interlocuteur, du support aux finitions</h2>
@@ -70,6 +72,10 @@ export default function Logements() {
           </div>
         </div>
       </section>
+
+      <Clients secteur="logements" title="Les promoteurs pour lesquels nous avons travaillé" />
+
+      <Faq items={faq.logements} />
 
       <CtaBand />
     </>

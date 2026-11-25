@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Faq from "@/components/Faq";
 import MapEmbed from "@/components/MapEmbed";
+import { faq } from "@/lib/faq";
 import PageHeader from "@/components/PageHeader";
+import Photo from "@/components/Photo";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,7 +18,7 @@ export default function Contact() {
       <PageHeader
         eyebrow="Contact · Devis"
         title="Un chantier à carreler ? Appelez-nous."
-        lead="Décrivez-nous votre projet par téléphone, nous vous préparons un devis."
+        lead="Décrivez-nous votre projet par téléphone ou par e-mail, nous vous préparons un devis."
       />
 
       <section className="section">
@@ -25,6 +28,13 @@ export default function Contact() {
             <a className="contact__phone" href={site.phoneHref}>
               {site.phone}
             </a>
+
+            <div className="contact__block">
+              <h2>E-mail</h2>
+              <a className="contact__mail" href={`mailto:${site.email}`}>
+                {site.email}
+              </a>
+            </div>
 
             <div className="contact__block">
               <h2>Adresse</h2>
@@ -68,9 +78,14 @@ export default function Contact() {
             </div>
           </div>
 
-          <MapEmbed />
+          <div className="contact__side">
+            <MapEmbed />
+            <Photo className="media media--wide" file="materiel.webp" alt="Matériel de chantier aux couleurs de MT Céramique" />
+          </div>
         </div>
       </section>
+
+      <Faq items={faq.contact} tint />
     </>
   );
 }
